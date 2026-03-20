@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CreateSpace.Inventory/CreateSpace.Inventory.csproj" />
+  <Project Path="CreateSpace.Scheduling/CreateSpace.Scheduling.csproj" />
+</Solution>

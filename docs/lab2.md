@@ -18,8 +18,8 @@
 2. Визначити нефункціональні вимоги (у вигляді quality attribute scenario).
 3. Визначити архітектуру системи та архітектурні рішення.
 4. Визначити правила опису API (API design guidelines). Вибрати та розібрати існуючий guideline або розробити власний.
-5. Описати API компонент на базі Open API, обов’язково використовуючи обраний guideline. Для реалізації цього пункту можна вибрати один з двох підходів 
-    1. Згенерувати Open API документацію із коду (але в цьому випадку реалізація демонстраційного сервісу мінімалістична). 
+5. Описати API компонент на базі Open API, обов’язково використовуючи обраний guideline. Для реалізації цього пункту можна вибрати один з двох підходів
+    1. Згенерувати Open API документацію із коду (але в цьому випадку реалізація демонстраційного сервісу мінімалістична).
     2. Написати Open API документацію вручну.
     3. Для презентації використати swagger або Redoc.
 
@@ -189,3 +189,433 @@
 * **`500 Internal Server Error`:** Непередбачувана помилка на сервері.
 
 ### 4. Дизайн API та OpenAPI
+
+Для створення документації використано підхід Docs as Code. Для демонстрації OpenAPI використано середовище Scalar (що по суті являє собою красивий Swagger).
+
+#### 4.1. Inventory Service API
+
+1. **Отримати список обладнання**
+![Отримати список обладнання](./assets/img/api-docs/inventory/GET--:api:v1:studio-equipments.png)
+2. **Створити нове обладнання**
+![Створити нове обладнання](./assets/img/api-docs/inventory/POST--:api:v1:studio-equipments.png)
+3. **Повністю оновити дані обладнання**
+![Повністю оновити дані обладнання](./assets/img/api-docs/inventory/PUT--:api:v1:studio-equipments:{id}.png)
+4. **Видалити обладнання з бази**
+![Видалити обладнання з бази](./assets/img/api-docs/inventory/DELETE--:api:v1:studio-equipments:{id}.png)
+5. **Зробити екіп недоступним**
+![Зробити екіп недоступним](./assets/img/api-docs/inventory/POST--:api:v1:studio-equipments:{id}:disable.png)
+
+#### 4.2. Scheduling Service API
+
+## Source Files
+<details>
+<summary>
+    Exported JSON for Inventory OpenAPI
+</summary>
+
+```json
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "CreateSpace.Inventory | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5153/"
+    }
+  ],
+  "paths": {
+    "/api/v1/studio-equipments": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Отримати список обладнання",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponseOfEquipment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Створити нове обладнання",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Equipment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equipment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/studio-equipments/{id}": {
+      "put": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Повністю оновити дані обладнання",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Equipment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equipment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Видалити обладнання з бази",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/studio-equipments/{id}/disable": {
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Зробити екіп недоступним",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Equipment": {
+        "required": [
+          "id",
+          "name",
+          "category",
+          "pricePerHour",
+          "isAvailable"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "pricePerHour": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "isAvailable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MessageResponse": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "MetaData": {
+        "required": [
+          "currentPage",
+          "pageSize",
+          "totalItems",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalItems": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalPages": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedResponseOfEquipment": {
+        "required": [
+          "data",
+          "meta"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Equipment"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaData"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Inventory"
+    }
+  ]
+}
+```
+</details>

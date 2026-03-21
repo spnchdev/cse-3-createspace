@@ -195,26 +195,26 @@
 #### 4.1. Inventory Service API
 
 1. **Отримати список обладнання**
-![Отримати список обладнання](./assets/img/api-docs/inventory/GET--:api:v1:studio-equipments.png)
+![Отримати список обладнання](./assets/img/api-docs/inventory/GET--_api_v1_studio-equipments.png)
 2. **Створити нове обладнання**
-![Створити нове обладнання](./assets/img/api-docs/inventory/POST--:api:v1:studio-equipments.png)
+![Створити нове обладнання](./assets/img/api-docs/inventory/POST--_api_v1_studio-equipments.png)
 3. **Повністю оновити дані обладнання**
-![Повністю оновити дані обладнання](./assets/img/api-docs/inventory/PUT--:api:v1:studio-equipments:{id}.png)
+![Повністю оновити дані обладнання](./assets/img/api-docs/inventory/PUT--_api_v1_studio-equipments__id_.png)
 4. **Видалити обладнання з бази**
-![Видалити обладнання з бази](./assets/img/api-docs/inventory/DELETE--:api:v1:studio-equipments:{id}.png)
+![Видалити обладнання з бази](./assets/img/api-docs/inventory/DELETE--_api_v1_studio-equipments__id_.png)
 5. **Зробити екіп недоступним**
-![Зробити екіп недоступним](./assets/img/api-docs/inventory/POST--:api:v1:studio-equipments:{id}:disable.png)
+![Зробити екіп недоступним](./assets/img/api-docs/inventory/POST--_api_v1_studio-equipments__id__disable.png)
 
 #### 4.2. Scheduling Service API
 
 1. **Отримати список бронювань студії на дату**
-![Отримати список бронювань студії на дату](./assets/img/api-docs/scheduling/GET--:api:v1:bookings.png)
+![Отримати список бронювань студії на дату](./assets/img/api-docs/scheduling/GET--_api_v1_bookings.png)
 2. **Створити нове бронювання (зайняти слот)**
-![Створити нове бронювання (зайняти слот)](./assets/img/api-docs/scheduling/POST--:api:v1:bookings.png)
+![Створити нове бронювання (зайняти слот)](./assets/img/api-docs/scheduling/POST--_api_v1_bookings.png)
 3. **Скасувати бронювання**
-![Скасувати бронювання](./assets/img/api-docs/scheduling/DELETE--:api:v1:bookings:{id}.png)
+![Скасувати бронювання](./assets/img/api-docs/scheduling/DELETE--_api_v1_bookings__id_.png)
 4. **Підтвердити бронювання та засінкати з календарем (custom action)**
-![Підтвердити бронювання та засінкати з календарем (custom action)](./assets/img/api-docs/scheduling/POST--:api:v1:bookings:{id}:confirm.png)
+![Підтвердити бронювання та засінкати з календарем (custom action)](./assets/img/api-docs/scheduling/POST--_api_v1_bookings__id__confirm.png)
 
 ## Source Files
 <details>

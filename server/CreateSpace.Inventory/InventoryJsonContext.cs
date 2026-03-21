@@ -9,6 +9,4 @@ namespace CreateSpace.Inventory;
 [JsonSerializable(typeof(MetaData))]
 [JsonSerializable(typeof(PaginatedResponse<Equipment>))]
 [JsonSerializable(typeof(MessageResponse))]
-internal partial class InventoryJsonContext : JsonSerializerContext
-{
-}
+internal partial class InventoryJsonContext : JsonSerializerContext;

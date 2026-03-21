@@ -9,6 +9,4 @@ namespace CreateSpace.Scheduling;
 [JsonSerializable(typeof(MetaData))]
 [JsonSerializable(typeof(PaginatedResponse<Booking>))]
 [JsonSerializable(typeof(MessageResponse))]
-internal partial class SchedulingJsonContext : JsonSerializerContext
-{
-}
+internal partial class SchedulingJsonContext : JsonSerializerContext;

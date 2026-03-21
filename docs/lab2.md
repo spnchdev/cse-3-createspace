@@ -150,13 +150,13 @@
 Використовується offset-based пагінація. Параметри передаються в query: `?page=1&limit=20`. Щоб frontend розумів поточну сторінку та міг рендерити компоненти пагінації, відповідь загортається в обʼєкт з метаданими:
 ```json
 {
-    "data": [ /* ...objects collection... */ ],
-    "meta": {
-        "currentPage": 1,
-        "pageSize": 20,
-        "totalItems": 150,
-        "totalPages": 8,
-    }
+  "data": [ /* ...objects collection... */ ],
+  "meta": {
+    "currentPage": 1,
+    "pageSize": 20,
+    "totalItems": 150,
+    "totalPages": 8,
+  }
 }
 ```
 3. **Фільтрація та сортування**
@@ -166,13 +166,13 @@
 Використовується стандарт RFC 7807 (Problem Detauls for HTTP APIs), який нативно підтримується в ASP.NET Core. Приклад:
 ```json
 {
-    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-    "title": "One or more validation errors occurred.",
-    "status": 400,
-    "traceId": "00-1234567890abcdef-12345678-00",
-    "errors": {
-        "EquipmentId": ["The EquipmentId field is required."]
-    }
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "00-1234567890abcdef-12345678-00",
+  "errors": {
+    "EquipmentId": ["The EquipmentId field is required."],
+  },
 }
 ```
 

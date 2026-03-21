@@ -987,6 +987,6 @@
       "name": "Scheduling"
     }
   ]
-}⏎
+}
 ```
 </details>

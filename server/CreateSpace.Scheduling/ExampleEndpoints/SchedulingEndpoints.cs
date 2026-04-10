@@ -1,4 +1,6 @@
+using CreateSpace.Contracts.Events;
 using CreateSpace.Scheduling.DTOs;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CreateSpace.Scheduling.ExampleEndpoints;
@@ -52,12 +54,18 @@ public static class SchedulingEndpoints
 
         api.MapPost(
                 "/{id:guid}/confirm",
-                (Guid id) =>
-                    Results.Ok(
-                        new MessageResponse("Booking confirmed and synced with Google Calendar")
-                    )
+                async (Guid id, IPublishEndpoint publishEndpoint) =>
+                {
+                    // here, booking status in Scheduling DB should be updated to 'Confirmed'
+                    // because this is just a PoC, the actual logic is not (yet) implemented
+                    // (c) spnchdev, Apr 11, 2026
+
+                    await publishEndpoint.Publish(new BookingConfirmedEvent(id));
+
+                    return Results.Ok(new BookingConfirmedResponse("Booking confirmed", id));
+                }
             )
-            .Produces<MessageResponse>(200)
+            .Produces<BookingConfirmedResponse>(200)
             .ProducesProblem(404)
             .WithSummary("Підтвердити бронювання та засінкати з календарем (custom action)");
     }

@@ -1,24 +1,23 @@
-using CreateSpace.Scheduling;
+using CreateSpace.Notification;
+using CreateSpace.Notification.Consumers;
 using MassTransit;
-using Scalar.AspNetCore;
-using CreateSpace.Scheduling.ExampleEndpoints;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, CreateSpace.Scheduling.SchedulingJsonContext.Default);
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, NotificationJsonContext.Default);
 });
-
-builder.Services.AddOpenApi();
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<BookingConfirmedEventConsumer>();
+
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.ConfigureJsonSerializerOptions(options =>
         {
-            options.TypeInfoResolverChain.Insert(0, SchedulingJsonContext.Default);
+            options.TypeInfoResolverChain.Insert(0, NotificationJsonContext.Default);
             
             return options;
         });
@@ -28,17 +27,11 @@ builder.Services.AddMassTransit(x =>
             h.Username("guest");
             h.Password("guest");
         });
+
+        cfg.ConfigureEndpoints(context);
     });
 });
 
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference();
-}
-
-app.MapSchedulingEndpoints();
 
 app.Run();

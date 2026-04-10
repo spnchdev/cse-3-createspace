@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="CreateSpace.Contracts/CreateSpace.Contracts.csproj" />
   <Project Path="CreateSpace.Inventory/CreateSpace.Inventory.csproj" />
+  <Project Path="CreateSpace.Notification/CreateSpace.Notification.csproj" />
   <Project Path="CreateSpace.Scheduling/CreateSpace.Scheduling.csproj" />
 </Solution>

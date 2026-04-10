@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using CreateSpace.Contracts.Events;
 using CreateSpace.Scheduling.DTOs;
 
 namespace CreateSpace.Scheduling;
@@ -9,4 +10,6 @@ namespace CreateSpace.Scheduling;
 [JsonSerializable(typeof(MetaData))]
 [JsonSerializable(typeof(PaginatedResponse<Booking>))]
 [JsonSerializable(typeof(MessageResponse))]
+[JsonSerializable(typeof(BookingConfirmedEvent))]
+[JsonSerializable(typeof(BookingConfirmedResponse))]
 internal partial class SchedulingJsonContext : JsonSerializerContext;
